@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Email</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <%- include('components/navbar') %>
+
+    <div class="form-container">
+        <h4>Sign Up</h4>
+        <form id="emailForm">
+            <input placeholder="Enter Your Email" type="email" id="email" name="email"><br><br>
+            <input placeholder="Enter Your Password" type="password" id="password" name="password"><br><br>
+            <button id="submit-button" type="submit">Sign Up</button>
+        </form>
+
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    document.getElementById('emailForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); 
+
+        try {
+            document.getElementById("submit-button").style.backgroundColor = '#164994';
+            document.getElementById("submit-button").innerText = "Wait for a while...."
+
+            const formData = new FormData(event.target); 
+
+            const response = await axios.post('/api/v1/auth/register', {
+                email: formData.get('email'),
+                password: formData.get('password')
+            },
+        
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+            
+            );
+
+
+            const data = response.data;
+
+            if (data.message === "Success") {
+                document.getElementById("submit-button").innerText = "Sign Up"
+                window.location.href = '/signin';
+            } 
+
+            alert(`${data.message}`)
+           
+        } catch (error) {
+            document.getElementById("submit-button").innerText = "Sign Up"
+            alert(`${error.message}`)
+            console.error('Error:', error);
+        }
+    });
+  </script>
+</body>
+</html>

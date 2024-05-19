@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1c1c1c; /* Warna latar belakang gelap */
+    color: #ccc; /* Warna teks */
+}
+
+nav {    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav h4 {
+    font-size: 1.125rem;
+    padding: 1rem;
+    margin: 0;
+    place-content: center;
+}
+  
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+  
+nav ul li {
+    float: left;
+    height: 100%;
+}
+  
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    height: 100%;
+    padding: 1rem;
+    text-decoration: none;
+}
+  
+nav ul li a:hover {
+    background-color: #111;
+}
+  
+@media screen and (max-width: 600px) {
+    nav ul li {
+      float: none;
+    }
+}
+
+.form-container {
+    margin: 25vh auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    place-content: center;
+    align-items: center;
+    border: 4px solid #444; /* Warna border abu-abu */
+    width: fit-content;
+    padding: 1rem;
+    background-color: #222; /* Warna latar belakang kontainer */
+}
+
+h4 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+input[type="email"] {
+    width: 250px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    background-color: #333; 
+    color: #ccc; 
+    transition: background-color 0.3s ease; 
+    outline: none;
+}
+
+input[type="password"] {
+    width: 250px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    background-color: #333; 
+    color: #ccc; 
+    transition: background-color 0.3s ease; 
+    outline: none;
+}
+
+input[type="email"]:focus {
+    background-color: #444;
+}
+
+input[type="password"]:focus {
+    background-color: #444;
+}
+
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #3399ff;
+    color: white;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+button[type="submit"]:hover {
+    background-color: #164994; 
+}
+
+#responseMessage {
+    margin-top: 20px;
+    font-style: italic;
+    color: #999;
+}
+
+.forgot-password-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: right;
+}
+
+.forgot-password {
+    display: inline-block;
+    font-size: 0.825rem;
+    margin-top: 15px;
+    text-align: right;
+    color: #b9dcff;
+}

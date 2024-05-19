@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <%- include('components/navbar') %>
+
+    <h1>Profile</h1>
+    <p>is Verified: <span id="email-verified"></span></p>
+    <p>Email: <span id="email"></span></p>
+    <p>Created At: <span id="createdAt"></span></p>
+
+
+    <p>Catatan : Jika email tidak terkirim, mohon klik tombol ini</p>
+    <button id="verify">Kirim Email Verifikasi</button>
+    
+    
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    document.getElementById("verify").addEventListener("click", async function() {
+      const sessionToken = sessionStorage.getItem('sessionToken');
+      
+      if (sessionToken) {
+        try {
+          const response = await axios.get('/try-send-email-verify', {
+            params: {
+              token: sessionToken
+            }
+          });
+          
+          console.log(response.data)
+
+          if(response.data) {
+            alert(response.data.message)
+          }
+        } catch (error) {
+          //console.error('Error', error);
+        }
+      } else {
+        //console.error('Session token is not found!');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      const sessionToken = sessionStorage.getItem('sessionToken');
+
+      console.log(sessionToken) //exist
+
+      if (sessionToken) {
+        try {
+          const response = await axios.get('/api/v1/auth/who-am-i', {
+            headers: {
+              'Authorization': `Bearer ${sessionToken}`
+            }
+          });
+
+          console.log(response)
+
+          const userData = response.data.data;
+          document.getElementById('email-verified').textContent = userData.isVerified;
+          document.getElementById('email').textContent = userData.email;
+          document.getElementById('createdAt').textContent = new Date(userData.createdAt).toDateString();
+        } catch (error) {
+          console.error('error', error);
+        }
+      } else {
+        console.error('No session token found');
+      }
+    });
+  </script>
+</body>
+</html>

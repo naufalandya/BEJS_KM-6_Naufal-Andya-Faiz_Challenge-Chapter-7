@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <%- include('components/navbar') %>
+
+    <div class="form-container">
+        <h4>Sign In</h4>
+        <form id="emailForm">
+            <input placeholder="Enter Your Email" type="email" id="email" name="email"><br><br>
+            <input placeholder="Enter Your Password" type="password" id="password" name="password"><br><br>
+            <button id="submit-button" type="submit">Login</button>
+            <div class="forgot-password-wrapper">
+                <p><a class="forgot-password" href="/email-verify">forgot password?</a></p>
+            </div>
+        </form>
+
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    document.getElementById('emailForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); 
+
+        try {
+            document.getElementById("submit-button").innerText = "Wait for a while...."
+
+            const formData = new FormData(event.target); 
+
+            const response = await axios.post('/api/v1/auth/login', {
+                email: formData.get('email'),
+                password: formData.get('password')
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        
+            );
+
+
+            const data = response.data;
+
+
+
+           
+
+            if (data) {
+                document.getElementById("submit-button").innerText = "Login"
+                sessionStorage.setItem('sessionToken', data.data.token);
+                if (data.message === "success") {
+                    window.location.href = '/profile';
+                } 
+                alert(`${data.message}`)
+            }
+           
+        } catch (error) {
+            document.getElementById("submit-button").innerText = "Login"
+            alert(`${error.message}`)
+            console.error('Error:', error);
+        }
+    });
+  </script>
+</body>
+</html>
