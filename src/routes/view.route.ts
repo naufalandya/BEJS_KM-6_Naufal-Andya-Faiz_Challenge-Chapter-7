@@ -4,7 +4,7 @@ import { beforeRenderResetPassword, trySendEmailAgain, verifyUserByEmail } from 
 
 const views = Router()
     .get("/", (req: Request, res: Response) => {
-        res.render('index', { title: 'Express with EJS and TypeScript' });
+        res.render('register', { title: 'Express with EJS and TypeScript' });
     })
 
     .get("/update-password-verify", beforeRenderResetPassword)

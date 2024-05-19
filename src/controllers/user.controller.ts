@@ -571,6 +571,8 @@ export const resetPasswordAsForgotByUser = async function(req : Request, res: Re
                         password : hashed
                     }
                 })
+
+                io.emit(`register-${token}`, `User dengan email ${result.email} berhasil mengganti password`)
     
             } else {
                 return

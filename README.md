@@ -1,9 +1,38 @@
 # Express Challenge 7
 
 ## DEMO
-### click image below to go to youtube to watch demo
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Zdmr-Q0pylk/0.jpg)](https://www.youtube.com/watch?v=Zdmr-Q0pylk)
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/wIZpiltL97o/0.jpg)](https://www.youtube.com/watch?v=wIZpiltL97o)
+
+
+## Usage
+
+#### Registration
+```bash
+  GET /signup
+```
+#### Login
+```bash
+  GET /signin
+```
+#### Profile
+```bash
+  GET /profile
+```
+#### Forgot Password
+```bash
+  GET /profile/email-verify
+```
+#### Reset Password
+```bash
+    GET /update-password-verify?token=
+```
+
+## install bun
+
+```bash
+powershell -c "irm bun.sh/install.ps1|iex"
+```
 
 ## How to run
 To install dependencies:
