@@ -5,6 +5,8 @@ import path from 'path'
 import cors from 'cors'
 import views from "./routes/view.route"
 import v1 from "./api/v1"
+import { corsMiddleware } from "./middlewares"
+import Sentry from "./libs/sentry.lib"
 //import expressListRoutes from "express-list-routes"
 
 const app = express()
@@ -48,11 +50,10 @@ const app = express()
 
 import http from "http"
 import { Server } from "socket.io"
-import { corsMiddleware } from "./middlewares"
-import Sentry from "./libs/sentry.lib"
+
 
 const server = http.createServer(app)
-const io = new Server(server)
+export const io = new Server(server)
 
 
 const PORT = Bun.env.PORT || 3000

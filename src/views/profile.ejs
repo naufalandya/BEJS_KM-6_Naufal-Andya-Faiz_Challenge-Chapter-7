@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 </head>
 <body>
 
@@ -18,6 +19,14 @@
 
     <p>Catatan : Jika email tidak terkirim, mohon klik tombol ini</p>
     <button id="verify">Kirim Email Verifikasi</button>
+
+
+    <div>
+      <h4 id="notifikasi">Notifikasi</h4>
+
+      <p>catatan : notifikasi hanya akan terbroadcast di tab sekarang, bukan tab baru, silahkan cek email terlebih dahulu setelah menekan tombol verifikasi</p>
+      <p id="io-notifikasi"></p>
+    </div>
     
     
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -65,9 +74,27 @@
           document.getElementById('email-verified').textContent = userData.isVerified;
           document.getElementById('email').textContent = userData.email;
           document.getElementById('createdAt').textContent = new Date(userData.createdAt).toDateString();
-        } catch (error) {
-          console.error('error', error);
-        }
+
+
+          const socket = io();
+
+          socket.on('connect', () => {
+              console.log('Connected to server');
+          });
+
+          socket.on('disconnect', () => {
+              console.log('Disconnected from server');
+          });
+
+          socket.on(`User-${userData.id}`, (message) => {
+              console.log('Received message:', message);
+              const newElement = document.createElement('p');
+              newElement.textContent = message;
+              document.getElementById('io-notifikasi').appendChild(newElement)
+          });
+          } catch (error) {
+            console.error('error', error);
+          }
       } else {
         console.error('No session token found');
       }

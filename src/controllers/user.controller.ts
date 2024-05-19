@@ -5,7 +5,7 @@ import { prisma } from "../libs";
 import { transporter } from "../libs/mailer.lib";
 import { Request, Response } from "express";
 import { JwtTokenInvalid } from "hono/utils/jwt/types";
-import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+import { io } from "..";
 
 const SERVER_EMAIL = String(Bun.env.SERVER_EMAIL)
 
@@ -603,7 +603,16 @@ export const verifyUserByEmail = async function(req : Request, res : Response){
             return res.json({status : false, message : "token is not provided"})
         }
 
+        if (!io) {
+            return res.json({ status: false, message: "Socket connection not established" });
+        }
+
         await verify(queryToken, SECRET).then( async (data : UserPayload) => {
+
+            
+
+            io.emit(`User-${data.id}`, `Selamat datang user dengan email ${data.email}, email anda berhasil diverifikasi`)
+
             await prisma.user.update({
                 where : {
                     id : data.id
@@ -624,7 +633,6 @@ export const verifyUserByEmail = async function(req : Request, res : Response){
         if(err instanceof JwtTokenInvalid){
             return res.json({status : false, message : "Invalid JWT Token"})
         }
-
         throw err
     }
 }
